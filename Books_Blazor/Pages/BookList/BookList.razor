@@ -1,6 +1,6 @@
 ﻿@using Books_Blazor.Models
 @inject BookService bookService
-
+@using Books_Blazor.Pages.BookList.BookListComponent
 <div class="container">
     <div class="row">
         <BookEdit SubmitCallBack="@ChangeBookList" book="book">
