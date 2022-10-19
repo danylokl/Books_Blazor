@@ -1,0 +1,40 @@
+﻿@using Books_Blazor.Models
+@inject BookService bookService
+
+<div class="container">
+    <div class="row">
+        <BookEdit SubmitCallBack="@ChangeBookList" book="book">
+        </BookEdit>
+    </div>
+</div>
+
+<div class="row scroler">
+
+    @foreach (var book in Books)
+    {
+        <BookListComponent OnEditCallback="@ChangeEditBook" book="book"> </BookListComponent>
+    }
+
+</div>
+<BookDetail></BookDetail>
+@code {
+    public Book book { get; set; } = new();
+    List<Book> Books = new List<Book>();
+
+    protected override void OnInitialized()
+    {
+        Books = bookService.GetAllBooks();
+    }
+
+    private void ChangeEditBook(Book bookToEdit)
+    {
+        book = bookToEdit;
+    }
+
+    private void ChangeBookList()
+    {
+        Books = bookService.GetAllBooks();
+        book = new();
+    }
+
+}

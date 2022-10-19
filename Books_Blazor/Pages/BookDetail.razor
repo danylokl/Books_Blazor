@@ -1,0 +1,34 @@
+﻿<div class="container">
+    <div class="wrapper">
+        <div>
+            <img src="@book.Cover"
+                 width="100"
+                 height="100" />
+            <p class="img-rating-review">
+                Rating: @book.Reviews.Average(i=>i.Score) Reviews:  @book.Reviews.Count()
+            </p>
+        </div>
+        <div>
+            <p>@book.Author @book.Genre</p>
+            <div class="content">
+                @book.Content
+            </div>
+        </div>
+    </div>
+    <ul>
+        @foreach (var review in book.Reviews)
+        {
+            <li>
+                <p> @review.Reviewer</p>
+                <div class="review-message">
+                  @review.Message
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+@code {
+    [Parameter]
+    public Book book { get; set; }
+
+}

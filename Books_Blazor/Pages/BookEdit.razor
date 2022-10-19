@@ -1,0 +1,70 @@
+﻿@inject BookService bookService
+
+<EditForm Model="@book" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div class="wrapper">
+        <div class="left">
+            <label>Title</label>
+            <InputText @bind-Value=book.Title class="form-control " />
+            <label>Cover</label>
+            <InputFile @bind-Value=book.Cover class="form-control" />
+            <label>Genre</label>
+            <InputText @bind-Value=book.Genre class="form-control" />
+            <label>Author</label>
+            <InputText @bind-Value=book.Author class="form-control" />
+           
+         
+        </div>
+        <div class="right">
+            <label>Content</label>
+            <InputText @bind-Value=book.Content style="height:100%;" class="form-control book-content" />
+            
+        </div>
+    </div>
+    <div class="buttons">
+        <button type="submit">Submit</button>
+        <button type="reset"> Clean</button>
+    </div> 
+</EditForm>
+@code {
+    [Parameter]
+    public Book book { get; set; }
+    [Parameter]
+    public EventCallback SubmitCallBack { get; set; }
+    private bool isEdit = false;
+
+    protected override void OnInitialized()
+    {
+
+    }
+
+    private void HandleSubmit()
+    {
+        if(!isEdit)
+        {
+            Book newBook = book;
+            newBook.Cover = "/626.png";
+            newBook.Reviews = new List<Review> { new Review(){Reviewer="",Score=0,Message=""}};
+
+            bookService.AddNewBook(newBook);
+            book = new();
+        }
+        else
+        {
+            bookService.EditBook(book);
+        }
+
+        SubmitCallBack.InvokeAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (book.Title != null)
+        {
+            isEdit = true;
+            
+        }
+
+    }
+}
