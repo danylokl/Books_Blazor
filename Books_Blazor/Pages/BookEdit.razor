@@ -53,6 +53,8 @@
         else
         {
             bookService.EditBook(book);
+            isEdit=false;
+             book = new();
         }
 
         SubmitCallBack.InvokeAsync();

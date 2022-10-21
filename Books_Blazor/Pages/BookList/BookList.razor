@@ -1,21 +1,29 @@
 ﻿@using Books_Blazor.Models
 @inject BookService bookService
 @using Books_Blazor.Pages.BookList.BookListComponent
-<div class="container">
+<div class="container" style="height:80%">
     <div class="row">
         <BookEdit SubmitCallBack="@ChangeBookList" book="book">
         </BookEdit>
     </div>
 </div>
 
-<div class="row scroler">
+<div class="container" style="height:700px">
+    <div class="row">
+        <div class="row scroler">
 
-    @foreach (var book in Books)
-    {
-        <BookListComponent OnEditCallback="@ChangeEditBook" book="book"> </BookListComponent>
-    }
+            @foreach (var book in Books)
+            {
+                <div class="item">
 
+                <BookListComponent OnEditCallback="@ChangeEditBook" book="book"> </BookListComponent>
+                </div>
+            }
+
+        </div>
+    </div>
 </div>
+
 <BookDetail></BookDetail>
 @code {
     public Book book { get; set; } = new();
@@ -35,6 +43,6 @@
     {
         Books = bookService.GetAllBooks();
         book = new();
-    }
+     }
 
 }
